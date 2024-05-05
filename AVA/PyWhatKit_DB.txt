@@ -1,0 +1,35 @@
+Date: 3/5/2024
+Time: 14:22
+Phone Number: +351936387475
+Message: Olá! Esta é uma mensagem enviada pelo WhatsApp usando Python.
+--------------------
+Date: 3/5/2024
+Time: 14:23
+Phone Number: +351936387475
+Message: Olá! Esta é uma mensagem enviada pelo WhatsApp usando Python.
+--------------------
+Date: 3/5/2024
+Time: 14:24
+Phone Number: +351936387475
+Message: Olá! Esta é uma mensagem enviada pelo WhatsApp usando Python.
+--------------------
+Date: 3/5/2024
+Time: 14:34
+Phone Number: +351936387475
+Message: Olá! Esta é uma mensagem enviada pelo WhatsApp usando Python.
+--------------------
+Date: 3/5/2024
+Time: 14:43
+Phone Number: +917020341372
+Message: hi dada kasho hai majama hai ki
+--------------------
+Date: 3/5/2024
+Time: 14:47
+Phone Number: +917020341372
+Message: hi dada kasho hai majama hai ki
+--------------------
+Date: 5/5/2024
+Time: 11:37
+Phone Number: +244não entendi o que você disse
+Message: vamos almoçar às 12 horas
+--------------------
