@@ -13,6 +13,8 @@ import time
 import winsound
 import sys
 from wikipedia import wikipedia
+from deep_translator import GoogleTranslator
+from pyjokes import pyjokes
 
 hotword = 'ativar assistente'
 speech_text = pyttsx3.init()
@@ -152,6 +154,13 @@ def voice_speech(text):
     speech_text.say(text)
     speech_text.runAndWait()
 
+def voice_speech1(text):
+    speech_text.setProperty('rate', 150)  # velocidade da fala
+    voices = speech_text.getProperty('voices')
+    speech_text.setProperty('voices', voices[1].id)  # alterar voz
+    speech_text.say(text)
+    speech_text.runAndWait()
+
 def latestnews():
     pais = 'pt'
     api_dict = {"negócios" : f"https://newsapi.org/v2/top-headlines?country={pais}&category=business&apiKey"
@@ -240,6 +249,20 @@ def tocarMusica():
     print(rd)
     os.startfile(os.path.join(music_dir, rd))
 
+
+def piadas():
+    tradutor = GoogleTranslator(source="en", target="pt")
+    joke = pyjokes.get_joke()
+    texto = joke
+    traducao = tradutor.translate(texto)
+    voice_speech1(traducao)
+
+def tradutor():
+    voice_speech('Que frase deseja traduzir em Ingles?')
+    comando = speech_recognition().lower()
+    tradutor = GoogleTranslator(source="pt", target="en")
+    traducao = tradutor.translate(comando)
+    voice_speech1(traducao)
 
 def encerrar():
     voice_speech('Encerrando o programa, Até breve!')

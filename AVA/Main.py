@@ -14,8 +14,8 @@ try:
     from urllib.error import URLError
     from AVA.ControladorDispositivo import controladorDispositivoArduino
     from AVA.Functions import latestnews, obter_clima_atual, _hora, _data, greeting_message, enviar_mensagem_whatsapp, \
-        speech_recognition, _pesquisar, _lembrete, mostrar_lista_tarefas, adicionar_tarefa, \
-        apagar_lista_tarefas, hotword, tocarMusica, encerrar, pesquisarWikipedia
+    speech_recognition, _pesquisar, _lembrete, mostrar_lista_tarefas, adicionar_tarefa, \
+    apagar_lista_tarefas, hotword, tocarMusica, encerrar, pesquisarWikipedia, piadas,tradutor
 except Exception as ex:
     voice_speech('Desculpe, Para ativar o Assistente Virtual Athena tem que conectar a Internet... Obrigado!')
 
@@ -50,6 +50,10 @@ def voice_command(comando):
         latestnews()
     elif "wikipédia" in comando:
         pesquisarWikipedia()
+    elif "piadas" in comando:
+        piadas()
+    elif "tradutor" in comando:
+        tradutor()
 
     elif "whatsapp" in comando:
         try:
