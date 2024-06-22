@@ -36,7 +36,6 @@ def _data():
 def _lembrete():
     # Obter o tempo atual
     agora = time.localtime()
-
     voice_speech("Sobre o que você gostaria de ser lembrado?")
     titulo = speech_recognition()
     voice_speech("Diga a hora num intervalo de 0 à 23!")
@@ -64,12 +63,8 @@ def _pesquisar():
         webbrowser.open(url)
         voice_speech(f"Aqui estão os resultados da pesquisa para {consulta_pesquisa}.")
 
-def enviar_mensagem_whatsapp(numero, mensagem, atraso_segundos=60):
-    # Obtém o horário atual
-    hora_atual = datetime.datetime.now()
-    hora_envio = hora_atual + datetime.timedelta(seconds=atraso_segundos)
-    # Envia a mensagem
-    kit.sendwhatmsg(numero, mensagem, hora_envio.hour, hora_envio.minute)
+
+
 
 
 def greeting_message():
@@ -125,7 +120,6 @@ def apagar_lista_tarefas():
 
 
 def speech_recognition():
-
     try:
         listener = sr.Recognizer()
         # Recebe informações dita pelo sensor de audio
@@ -133,7 +127,6 @@ def speech_recognition():
             listener.pause_threshold = 1  # dar pausa para fazer o reconhecimento
             audio = listener.listen(source, timeout=20, phrase_time_limit=40)
             listener.adjust_for_ambient_noise(source)  # Ajusta para o ruído do ambiente
-
         # Reconhece o comando apartir de uma Lingua predefinida
         texto = listener.recognize_google(audio, language='pt-BR')
         print("Você disse: " + texto)
@@ -154,12 +147,14 @@ def voice_speech(text):
     speech_text.say(text)
     speech_text.runAndWait()
 
+
 def voice_speech1(text):
     speech_text.setProperty('rate', 150)  # velocidade da fala
     voices = speech_text.getProperty('voices')
     speech_text.setProperty('voices', voices[1].id)  # alterar voz
     speech_text.say(text)
     speech_text.runAndWait()
+
 
 def latestnews():
     pais = 'pt'
@@ -172,7 +167,7 @@ def latestnews():
                 "esportes" : f"https://newsapi.org/v2/top-headlines?country={pais}&category=sports&apiKey"
                              f"=5b82b45932bd4045a6069a2e0b86b4b6&lang=pt",
                 "tecnologia" : f"https://newsapi.org/v2/top-headlines?country={pais}&category=technology&apiKey"
-                               f"=5b82b45932bd4045a6069a2e0b86b4b6&lang=pt "
+                               f"=5b82b45932bd4045a6069a2e0b86b4b6&lang=pt"
     }
 
     url = None
@@ -229,6 +224,7 @@ def obter_clima_atual():
     else:
         voice_speech("Não foi possível obter informações sobre o clima.")
 
+
 def pesquisarWikipedia():
     try:
         voice_speech("Diga o tema que deseja saber?...")
@@ -257,12 +253,14 @@ def piadas():
     traducao = tradutor.translate(texto)
     voice_speech1(traducao)
 
+
 def tradutor():
     voice_speech('Que frase deseja traduzir em Ingles?')
     comando = speech_recognition().lower()
     tradutor = GoogleTranslator(source="pt", target="en")
     traducao = tradutor.translate(comando)
     voice_speech1(traducao)
+
 
 def encerrar():
     voice_speech('Encerrando o programa, Até breve!')

@@ -33,3 +33,33 @@ Time: 11:37
 Phone Number: +244não entendi o que você disse
 Message: vamos almoçar às 12 horas
 --------------------
+Date: 10/6/2024
+Time: 13:6
+Phone Number: +244939390070
+Message: Assistente Athena, mensagem
+--------------------
+Date: 20/6/2024
+Time: 21:57
+Phone Number: +244939390070
+Message: Assistente Athena, mensagem
+--------------------
+Date: 20/6/2024
+Time: 22:4
+Phone Number: +244939390070
+Message: Assistente Athena, mensagem
+--------------------
+Date: 20/6/2024
+Time: 22:9
+Phone Number: +244939390070
+Message: Assistente Athena, mensagem
+--------------------
+Date: 20/6/2024
+Time: 22:14
+Phone Number: +244941515240
+Message: não entendi o que você disse
+--------------------
+Date: 20/6/2024
+Time: 22:22
+Phone Number: +244939390070
+Message: Assistente Athena, mensagem
+--------------------

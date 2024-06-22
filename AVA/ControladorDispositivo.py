@@ -5,8 +5,17 @@ import speech_recognition as sr
 
 speech_text = pyttsx3.init()
 
+# Tenta inicializar a conexão com o Arduino
+try:
+    import serial
+    arduino = serial.Serial('COM5', 9600)  # 'COM5' porta serial do seu Arduino
+    arduino_connected = True
+except (serial.SerialException, AttributeError):
+    arduino_connected = False
+
 
 def enviar_comando(comando, arduino):
+    time.sleep(1.8)  # Aguarda 2 segundos para estabilizar a conexão serial
     arduino.write(comando.encode())
 
 
@@ -44,9 +53,6 @@ def controladorDispositivoArduino():
     comando = speech_recognition().lower()
 
     try:
-        arduino = serial.Serial('COM5', 9600)  # 'COM5' porta serial do seu Arduino
-        time.sleep(2)  # Aguarda 2 segundos para estabilizar a conexão serial
-
         if "desligar lâmpada" in comando:
             enviar_comando('1', arduino)
             print("Desligando a lâmpada...")
@@ -55,14 +61,14 @@ def controladorDispositivoArduino():
             enviar_comando('0', arduino)
             print("Ligando a lâmpada...")
             voice_speech("A Lâmpada está ligada!")
-        elif 'desligar dispositivo 2' in comando:
+        elif 'desligar ventilador' in comando:
             enviar_comando('3', arduino)
-            print("Desligando Dispositivo 2...")
-            voice_speech("O Dispositivo 2 está desligado!")
-        elif 'ligar dispositivo 2' in comando:
+            print("Desligando ventilador...")
+            voice_speech("O ventilador está desligado!")
+        elif 'ligar ventilador' in comando:
             enviar_comando('2', arduino)
-            print("ligando O Dispositivo 2...")
-            voice_speech("O Dispositivo 2 está ligado!")
+            print("ligando O ventilador...")
+            voice_speech("O ventilador está ligado!")
         elif 'desligar dispositivo 3' in comando:
             enviar_comando('5', arduino)
             print("Desligando Dispositivo 3...")
@@ -77,12 +83,31 @@ def controladorDispositivoArduino():
             voice_speech("O Dispositivo 4 está desligado!")
         elif 'ligar dispositivo 4' in comando:
             enviar_comando('6', arduino)
-            print("Desligando o Dispositivo 4...")
+            print("ligando o Dispositivo 4...")
             voice_speech("O Dispositivo 4 está ligado!")
+        elif 'desligar tudo' in comando:
+            enviar_comando('1', arduino)
+            enviar_comando('3', arduino)
+            enviar_comando('5', arduino)
+            enviar_comando('7', arduino)
+            print("desligando o tudo...")
+            voice_speech("todos Dispositivos estão desligado!")
+        elif 'ligar tudo' in comando:
+            enviar_comando('0', arduino)
+            enviar_comando('2', arduino)
+            enviar_comando('4', arduino)
+            enviar_comando('6', arduino)
+            print("ligando o tudo...")
+            voice_speech("todos Dispositivos estão ligado!")
         else:
-            print("Comando não reconhecido.")
+            print("Comando não recoonhecido.")
         arduino.flush()
 
     except Exception as e:
-        voice_speech('O Arduino não conectado!...')
+        voice_speech('O Arduino não está conectado!...')
+
+
+if __name__ == '__main__':
+    # Ligar [0] | Desligar [1]
+    enviar_comando('0', arduino)
 

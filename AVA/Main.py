@@ -1,3 +1,7 @@
+import datetime
+import re
+
+import pywhatkit as kit
 import pyttsx3
 speech_text = pyttsx3.init()
 
@@ -5,15 +9,23 @@ speech_text = pyttsx3.init()
 def voice_speech(text):
     speech_text.setProperty('rate', 220)  # velocidade da fala
     voices = speech_text.getProperty('voices')
-    speech_text.setProperty('voices', voices[1].id)  # alterar voz
+    speech_text.setProperty('voices', voices[0].id)  # alterar voz
     speech_text.say(text)
     speech_text.runAndWait()
+
+def enviar_mensagem_whatsapp(numero, mensagem, atraso_segundos=60):
+    # Obtém o horário atual
+    hora_atual = datetime.datetime.now()
+    # Calcula o horário de envio
+    hora_envio = hora_atual + datetime.timedelta(seconds=atraso_segundos)
+    # Envia a mensagem
+    kit.sendwhatmsg(numero, mensagem, hora_envio.hour, hora_envio.minute)
 
 
 try:
     from urllib.error import URLError
     from AVA.ControladorDispositivo import controladorDispositivoArduino
-    from AVA.Functions import latestnews, obter_clima_atual, _hora, _data, greeting_message, enviar_mensagem_whatsapp, \
+    from AVA.Functions import latestnews, obter_clima_atual, _hora, _data, greeting_message, \
     speech_recognition, _pesquisar, _lembrete, mostrar_lista_tarefas, adicionar_tarefa, \
     apagar_lista_tarefas, hotword, tocarMusica, encerrar, pesquisarWikipedia, piadas,tradutor
 except Exception as ex:
@@ -54,16 +66,19 @@ def voice_command(comando):
         piadas()
     elif "tradutor" in comando:
         tradutor()
-
     elif "whatsapp" in comando:
         try:
             voice_speech('Diz o número do telefone que desja enviar mensagem!')
-            numero = "+244" + speech_recognition().lower()
+            numero = speech_recognition().lower()
+            numbers_only = re.sub(r'\D', '', numero)
             voice_speech('Diga a mensagem que deseja enviar')
             mensagem = speech_recognition().lower()
-            enviar_mensagem_whatsapp(numero, mensagem, atraso_segundos=60)
+            numbers1 = '+244'+numbers_only
+            print(numbers1)
+            enviar_mensagem_whatsapp(numbers1, mensagem, atraso_segundos=60)
         except Exception as e:
-            voice_speech('Desculpe, Erro! ao tentar enviar mensagem, verifique o número!')
+            print('Erro ao tentar enviar mensagem, verifique o número!')
+
 
 
 def acessoAssistente():
