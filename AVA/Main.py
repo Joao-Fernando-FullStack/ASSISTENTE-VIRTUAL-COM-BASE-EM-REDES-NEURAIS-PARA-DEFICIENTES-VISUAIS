@@ -1,8 +1,15 @@
 import datetime
+import os
+import random
 import re
+import pygame
 
-import pywhatkit as kit
 import pyttsx3
+
+from mutagen.mp3 import MP3
+from mutagen import MutagenError
+
+
 speech_text = pyttsx3.init()
 
 
@@ -12,6 +19,7 @@ def voice_speech(text):
     speech_text.setProperty('voices', voices[0].id)  # alterar voz
     speech_text.say(text)
     speech_text.runAndWait()
+
 
 def enviar_mensagem_whatsapp(numero, mensagem, atraso_segundos=60):
     # Obtém o horário atual
@@ -23,13 +31,51 @@ def enviar_mensagem_whatsapp(numero, mensagem, atraso_segundos=60):
 
 
 try:
+    import pywhatkit as kit
     from urllib.error import URLError
     from AVA.ControladorDispositivo import controladorDispositivoArduino
     from AVA.Functions import latestnews, obter_clima_atual, _hora, _data, greeting_message, \
     speech_recognition, _pesquisar, _lembrete, mostrar_lista_tarefas, adicionar_tarefa, \
-    apagar_lista_tarefas, hotword, tocarMusica, encerrar, pesquisarWikipedia, piadas,tradutor
+    apagar_lista_tarefas, hotword, encerrar, pesquisarWikipedia, piadas, tradutor, sobre
 except Exception as ex:
     voice_speech('Desculpe, Para ativar o Assistente Virtual Athena tem que conectar a Internet... Obrigado!')
+
+
+def validar_mp3(filepath):
+    try:
+        mp3 = MP3(filepath)
+        return True
+    except MutagenError:
+        return False
+
+
+def tocarMusica1():
+    pygame.mixer.init()
+    try:
+        music_dir = "C:/Users/PC/Music"
+        songs = [song for song in os.listdir(music_dir) if song.endswith('.mp3')]
+        random.shuffle(songs)  # Shuffle the list to try different files
+        for song in songs:
+            song_path = os.path.join(music_dir, song)
+            if validar_mp3(song_path):
+                try:
+                    print(f"Tentando tocar: {song}")
+                    pygame.mixer.music.load(song_path)
+                    pygame.mixer.music.play()
+
+                    print(f"Tocando: {song}")
+                    break
+                except pygame.error as e:
+                    print(f"Erro ao tocar {song}: {e}")
+                    continue
+            else:
+                print(f"Arquivo corrompido ou inválido: {song}")
+    except Exception as e:
+        print(f"Erro ao tocar música: {e}")
+
+
+def pararMusica():
+    pygame.mixer.music.pause()
 
 
 answer = str()
@@ -57,7 +103,9 @@ def voice_command(comando):
     elif "controlar dispositivo" in comando:
         controladorDispositivoArduino()
     elif "tocar música" in comando:
-        tocarMusica()
+        tocarMusica1()
+    elif "para música" in comando:
+        pararMusica()
     elif "notícias" in comando:
         latestnews()
     elif "wikipédia" in comando:
@@ -66,6 +114,8 @@ def voice_command(comando):
         piadas()
     elif "tradutor" in comando:
         tradutor()
+    elif "quem és" in comando:
+        sobre()
     elif "whatsapp" in comando:
         try:
             voice_speech('Diz o número do telefone que desja enviar mensagem!')
@@ -78,7 +128,8 @@ def voice_command(comando):
             enviar_mensagem_whatsapp(numbers1, mensagem, atraso_segundos=60)
         except Exception as e:
             print('Erro ao tentar enviar mensagem, verifique o número!')
-
+    else:
+        print("comando não válido, diga alguma coisa ou um comando vãlido!")
 
 
 def acessoAssistente():

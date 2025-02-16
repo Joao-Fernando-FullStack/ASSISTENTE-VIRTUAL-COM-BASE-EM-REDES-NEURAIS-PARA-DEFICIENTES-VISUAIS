@@ -16,6 +16,7 @@ from wikipedia import wikipedia
 from deep_translator import GoogleTranslator
 from pyjokes import pyjokes
 
+
 hotword = 'ativar assistente'
 speech_text = pyttsx3.init()
 hora_atual = datetime.now()
@@ -68,7 +69,7 @@ def _pesquisar():
 
 
 def greeting_message():
-    voice_speech('Olá, benvindo de volta! sou sua Assistente Virtual, Athena!')
+    voice_speech('Olá, benvindo de volta!')
     hora = int(hora_atual.strftime('%H'))
     if 6 <= hora <= 12:
         voice_speech('Bom dia!')
@@ -78,7 +79,7 @@ def greeting_message():
         voice_speech('Boa noite!')
     else:
         voice_speech('Bom dia!')
-    voice_speech('... Estou a sua disposição, diZ-me como posso ajudá-lo!')
+    voice_speech('... Estou a sua disposição, como posso ajudá-lo!')
 
 
 # Função para mostrar a lista de tarefas
@@ -181,7 +182,7 @@ def latestnews():
             voice_speech("URL encontrada")
             break
     if url is None:
-        voice_speech("URL não encontrada")
+        #voice_speech("URL não encontrada")
         return
 
     news = requests.get(url).json()
@@ -265,4 +266,17 @@ def tradutor():
 def encerrar():
     voice_speech('Encerrando o programa, Até breve!')
     sys.exit()
+
+
+def ajuda():
+    voice_speech("Seja benvindo ao menu de ajuda")
+    voice_speech("Para saber a hora diga 1")
+    voice_speech("Para saber o dia diga 2")
+    voice_speech("Para saber a previsão do clima diga 3")
+    voice_speech("Para tocar música diga 4")
+
+
+def sobre():
+    voice_speech("Sou a assistente virtual Athena, desenvolvido por João, Fernando, Matias. Em 2023.")
+    voice_speech("Fui desenvolvido para ajudar você,em suas atividades diárias.")
 

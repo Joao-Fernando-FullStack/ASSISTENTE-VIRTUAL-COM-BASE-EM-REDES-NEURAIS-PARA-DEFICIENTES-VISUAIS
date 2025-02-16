@@ -63,3 +63,18 @@ Time: 22:22
 Phone Number: +244939390070
 Message: Assistente Athena, mensagem
 --------------------
+Date: 23/6/2024
+Time: 20:45
+Phone Number: +244939390070
+Message: estou vindo em casa
+--------------------
+Date: 16/2/2025
+Time: 10:46
+Phone Number: +2449393900070
+Message: bem-vindo
+--------------------
+Date: 16/2/2025
+Time: 10:57
+Phone Number: +244939390030
+Message: vem em casa
+--------------------

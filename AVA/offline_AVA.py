@@ -30,12 +30,27 @@ speech_text = pyttsx3.init()
 hora_atual = datetime.now()
 
 
+# Tenta inicializar a conexão com o Arduino
+try:
+    import serial
+    arduino = serial.Serial('COM5', 9600)  # 'COM5' porta serial do seu Arduino
+    arduino_connected = True
+except (serial.SerialException, AttributeError):
+    arduino_connected = False
+
+
 def voice_speech(text):
-    speech_text.setProperty('rate', 180)  # velocidade da fala ajustada para ser mais clara
+    speech_text.setProperty('rate', 220)  # velocidade da fala ajustada para ser mais clara
     voices = speech_text.getProperty('voices')
     speech_text.setProperty('voice', voices[0].id)  # alterar voz
     speech_text.say(text)
     speech_text.runAndWait()
+
+
+def sobre():
+    voice_speech("Sou a assistente virtual Athena, desenvolvido por João Fernando Matias. Em 2023.")
+    voice_speech("Fui desenvolvido para ajudar voçe,em suas atividades diárias.")
+
 
 
 # Configurações iniciais
@@ -99,6 +114,7 @@ def validar_mp3(filepath):
         return True
     except MutagenError:
         return False
+
 
 def tocarMusica1():
     try:
@@ -165,7 +181,7 @@ def enviar_comando(comando, arduino):
 
 def greeting_message():
     pygame.mixer.init()
-    voice_speech('Olá, benvindo de volta! sou sua Assistente Virtual, Athena!')
+    voice_speech('Olá, benvindo de volta!')
     hora = int(hora_atual.strftime('%H'))
     if 6 <= hora <= 12:
         voice_speech('Bom dia!')
@@ -225,44 +241,25 @@ def responder(text):
     elif "acender lâmpada" in comando or "acende" in comando:
         enviar_comando('0', arduino)
         print("Ligando a lâmpada...")
-        voice_speech("A Lâmpada está ligada!")
-    elif "desligar lâmpada" in comando or "desliga" in comando:
+        voice_speech("A Lâmpada está aceza!")
+    elif "desligar lâmpada" in comando or "des" in comando:
         enviar_comando('1', arduino)
         print("Desligando a lâmpada...")
         voice_speech("A Lâmpada está desligada!")
-    elif 'desligar ventilador' in comando:
-        enviar_comando('3', arduino)
-        print("Desligando ventilador...")
-        voice_speech("O ventilador está desligado!")
-    elif 'ligar ventilador' in comando:
-        enviar_comando('2', arduino)
-        print("ligando O ventilador...")
-        voice_speech("O ventilador está ligado!")
-    elif 'desligar tudo' in comando:
-        enviar_comando('1', arduino)
-        enviar_comando('3', arduino)
-        enviar_comando('5', arduino)
-        enviar_comando('7', arduino)
-        print("desligando o tudo...")
-        voice_speech("todos Dispositivos estão desligado!")
-    elif 'ligar tudo' in comando:
-        enviar_comando('0', arduino)
-        enviar_comando('2', arduino)
-        enviar_comando('4', arduino)
-        enviar_comando('6', arduino)
-        print("ligando o tudo...")
-        voice_speech("todos Dispositivos estão ligado!")
-    if "lista de tarefas" in comando:
+    elif "lista de tarefas" in comando:
         mostrar_lista_tarefas()
     elif "adicionar tarefa" in comando:
         adicionar_tarefa()
-    elif "apagar tarefa" in comando:
+    elif "pagar tarefa" in comando:
         apagar_lista_tarefas()
     elif "tocar música" in comando:
         tocarMusica1()
     elif "para" in comando:
         pausarMusica()
+    elif "quem és" in comando:
+        sobre()
     elif "terminar" in comando or "encerra" in comando:
+        voice_speech("Encerrando. O assistente!")
         return True
     else:
         response = "Comando não reconhecido."

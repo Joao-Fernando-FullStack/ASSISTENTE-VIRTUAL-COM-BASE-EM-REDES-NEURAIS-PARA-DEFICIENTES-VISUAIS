@@ -88,15 +88,11 @@ def controladorDispositivoArduino():
         elif 'desligar tudo' in comando:
             enviar_comando('1', arduino)
             enviar_comando('3', arduino)
-            enviar_comando('5', arduino)
-            enviar_comando('7', arduino)
             print("desligando o tudo...")
             voice_speech("todos Dispositivos estão desligado!")
         elif 'ligar tudo' in comando:
             enviar_comando('0', arduino)
             enviar_comando('2', arduino)
-            enviar_comando('4', arduino)
-            enviar_comando('6', arduino)
             print("ligando o tudo...")
             voice_speech("todos Dispositivos estão ligado!")
         else:
@@ -109,5 +105,5 @@ def controladorDispositivoArduino():
 
 if __name__ == '__main__':
     # Ligar [0] | Desligar [1]
-    enviar_comando('0', arduino)
+    enviar_comando('1', arduino)
 
